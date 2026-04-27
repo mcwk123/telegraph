@@ -155,7 +155,18 @@ CREATE TABLE media (
     fileId TEXT NOT NULL
 );
 ```
+针对修改后的Workers文件需要执行下 SQL 语句
+```sql
+CREATE TABLE IF NOT EXISTS media (
+  url          TEXT PRIMARY KEY,
+  fileId       TEXT NOT NULL,
+  prompt_hash  TEXT,
+  created_at   INTEGER
+);
 
+CREATE INDEX IF NOT EXISTS idx_media_prompt_hash ON media(prompt_hash);
+CREATE INDEX IF NOT EXISTS idx_media_created_at  ON media(created_at DESC);
+```
 ### 5. 创建 Worker
 1. 进入 `Workers & Pages`
 2. 点击 `创建`
